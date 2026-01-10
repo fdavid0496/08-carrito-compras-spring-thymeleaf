@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <main class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title mb-0">Iniciar Sesión</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            Credenciales inválidas. Intente nuevamente.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-info">
+                            Ha cerrado sesión exitosamente.
+                        </div>
+                        <div th:if="${param.registrado}" class="alert alert-success">
+                            Registro exitoso. Por favor inicie sesión.
+                        </div>
+
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="username" name="username" required
+                                    autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Ingresar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>
