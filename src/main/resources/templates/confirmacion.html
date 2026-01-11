@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/navbar :: nav}"></nav>
+
+    <main class="container text-center mt-5">
+        <div class="card shadow border-0 mx-auto" style="max-width: 600px;">
+            <div class="card-body py-5">
+                <div class="mb-4 text-success animate__animated animate__bounceIn">
+                    <i class="bi bi-check-circle-fill" style="font-size: 6rem;"></i>
+                </div>
+                <h1 class="card-title fw-bold text-success mb-3">¡Compra Exitosa!</h1>
+                <p class="lead mb-4">Gracias por tu compra. Hemos procesado tu orden correctamente.</p>
+
+                <div class="alert alert-light border d-inline-block px-5 py-3 shadow-sm">
+                    <p class="mb-0 text-muted small">NÚMERO DE ORDEN</p>
+                    <h2 class="mb-0 fw-bold" th:text="${'#' + ordenId}">#123</h2>
+                </div>
+
+                <div class="mt-5 d-flex justify-content-center gap-3">
+                    <a href="/catalogo" class="btn btn-primary btn-lg"><i class="bi bi-shop"></i> Seguir Comprando</a>
+                    <a href="/logout" class="btn btn-outline-secondary btn-lg">Salir</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
+
+</body>
+
+</html>

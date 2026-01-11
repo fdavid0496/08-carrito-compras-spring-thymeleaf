@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/layout :: head}"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body>
 
-    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <nav th:replace="~{fragments/navbar :: nav}"></nav>
 
     <main class="container">
         <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-            <h2>Gestión de Productos</h2>
-            <a href="/admin/productos/nuevo" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Nuevo Producto</a>
+            <h2 class="fw-bold"><i class="bi bi-box-seam"></i> Gestión de Productos</h2>
+            <a href="/admin/productos/nuevo" class="btn btn-primary shadow-sm"><i class="bi bi-plus-lg"></i> Nuevo
+                Producto</a>
         </div>
 
         <!-- Alertas Flash -->
-        <div th:if="${mensaje}" th:class="${'alert alert-' + tipo + ' alert-dismissible fade show'}" role="alert"
-            id="flashMessage">
-            <span th:text="${mensaje}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+        <div th:replace="~{fragments/alerts :: alerts}"></div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
+        <div class="card shadow border-0">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>ID</th>
+                                <th class="ps-4">ID</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
                                 <th>Stock</th>
                                 <th>Estado</th>
-                                <th>Acciones</th>
+                                <th class="text-end pe-4">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="prod : ${productos.content}">
-                                <td th:text="${prod.id}">1</td>
+                                <td class="ps-4" th:text="${prod.id}">1</td>
                                 <td>
                                     <img th:src="${prod.imagenUrl}" alt="Img"
-                                        style="width: 50px; height: 50px; object-fit: cover;" class="rounded">
+                                        style="width: 50px; height: 50px; object-fit: cover;" class="rounded border"
+                                        onerror="this.src='https://via.placeholder.com/50'">
                                 </td>
-                                <td th:text="${prod.nombre}">Nombre Producto</td>
+                                <td th:text="${prod.nombre}" class="fw-semibold">Nombre Producto</td>
                                 <td th:text="${'$ ' + prod.precio}">$ 0.00</td>
                                 <td th:text="${prod.stock}">0</td>
                                 <td>
-                                    <span th:if="${prod.activo}" class="badge bg-success">Activo</span>
-                                    <span th:unless="${prod.activo}" class="badge bg-danger">Inactivo</span>
+                                    <span th:if="${prod.activo}" class="badge bg-success rounded-pill"><i
+                                            class="bi bi-check-circle"></i> Activo</span>
+                                    <span th:unless="${prod.activo}" class="badge bg-danger rounded-pill"><i
+                                            class="bi bi-x-circle"></i> Inactivo</span>
                                 </td>
-                                <td>
+                                <td class="text-end pe-4">
                                     <a th:href="@{/admin/productos/editar/{id}(id=${prod.id})}"
-                                        class="btn btn-sm btn-outline-primary">
+                                        class="btn btn-sm btn-outline-primary me-1" title="Editar">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <form th:action="@{/admin/productos/eliminar/{id}(id=${prod.id})}" method="post"
                                         style="display:inline;"
                                         onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
@@ -68,19 +68,20 @@
                 </div>
 
                 <!-- Paginación -->
-                <nav th:if="${productos.totalPages > 1}">
+                <nav th:if="${productos.totalPages > 1}" class="border-top pt-3 pb-2">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:classappend="${productos.first} ? 'disabled'">
-                            <a class="page-link"
-                                th:href="@{/admin/productos(page=${productos.number - 1})}">Anterior</a>
+                            <a class="page-link border-0" th:href="@{/admin/productos(page=${productos.number - 1})}"><i
+                                    class="bi bi-chevron-left"></i></a>
                         </li>
                         <li class="page-item" th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}"
                             th:classappend="${i == productos.number} ? 'active'">
-                            <a class="page-link" th:href="@{/admin/productos(page=${i})}" th:text="${i + 1}">1</a>
+                            <a class="page-link border-0 mx-1 rounded" th:href="@{/admin/productos(page=${i})}"
+                                th:text="${i + 1}">1</a>
                         </li>
                         <li class="page-item" th:classappend="${productos.last} ? 'disabled'">
-                            <a class="page-link"
-                                th:href="@{/admin/productos(page=${productos.number + 1})}">Siguiente</a>
+                            <a class="page-link border-0" th:href="@{/admin/productos(page=${productos.number + 1})}"><i
+                                    class="bi bi-chevron-right"></i></a>
                         </li>
                     </ul>
                 </nav>
@@ -88,19 +89,8 @@
         </div>
     </main>
 
-    <footer th:replace="~{fragments/layout :: footer}"></footer>
-    <div th:replace="~{fragments/layout :: scripts}"></div>
-
-    <script>
-        // Desvanecer alerta después de 5 segundos
-        setTimeout(function () {
-            let alert = document.getElementById('flashMessage');
-            if (alert) {
-                let bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            }
-        }, 5000);
-    </script>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
 
 </body>
 

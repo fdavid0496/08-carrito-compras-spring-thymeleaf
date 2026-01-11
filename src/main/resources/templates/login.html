@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/layout :: head}"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body>
 
-    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <nav th:replace="~{fragments/navbar :: nav}"></nav>
 
     <main class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-5">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="card-title mb-0">Iniciar Sesión</h4>
+            <div class="col-md-4">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4 class="mb-0"><i class="bi bi-person-circle"></i> Iniciar Sesión</h4>
                     </div>
-                    <div class="card-body">
-
-                        <div th:if="${param.error}" class="alert alert-danger">
-                            Credenciales inválidas. Intente nuevamente.
+                    <div class="card-body p-4 bg-white">
+                        <div th:if="${param.error}" class="alert alert-danger shadow-sm">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Credenciales inválidas.
                         </div>
-                        <div th:if="${param.logout}" class="alert alert-info">
-                            Ha cerrado sesión exitosamente.
-                        </div>
-                        <div th:if="${param.registrado}" class="alert alert-success">
-                            Registro exitoso. Por favor inicie sesión.
+                        <div th:if="${param.logout}" class="alert alert-info shadow-sm">
+                            <i class="bi bi-info-circle-fill"></i> Has cerrado sesión exitosamente.
                         </div>
 
                         <form th:action="@{/login}" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="username" name="username" required
-                                    autofocus>
+                                <label for="username" class="form-label text-muted">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="username" name="username" required
+                                        autofocus>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="mb-4">
+                                <label for="password" class="form-label text-muted">Contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
                             </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Ingresar</button>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer text-center">
-                        <small>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></small>
+                    <div class="card-footer text-center bg-light py-3">
+                        <small>¿No tienes cuenta? <a href="/registro" class="text-decoration-none fw-bold">Regístrate
+                                aquí</a></small>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer th:replace="~{fragments/layout :: footer}"></footer>
-    <div th:replace="~{fragments/layout :: scripts}"></div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
 
 </body>
 

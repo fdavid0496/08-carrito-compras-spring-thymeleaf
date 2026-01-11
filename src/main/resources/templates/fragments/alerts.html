@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="alerts">
+        <div th:if="${mensaje}"
+            th:class="${'alert alert-' + (tipo != null ? tipo : 'info') + ' alert-dismissible fade show shadow-sm'}"
+            role="alert">
+            <i th:if="${tipo == 'success'}" class="bi bi-check-circle-fill me-2"></i>
+            <i th:if="${tipo == 'danger'}" class="bi bi-exclamation-triangle-fill me-2"></i>
+            <i th:if="${tipo == 'warning'}" class="bi bi-exclamation-circle-fill me-2"></i>
+            <i th:if="${tipo == 'info'}" class="bi bi-info-circle-fill me-2"></i>
+            <span th:text="${mensaje}">Mensaje</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/layout :: head}"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body>
 
-    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    <nav th:replace="~{fragments/navbar :: nav}"></nav>
 
     <main class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0"
-                            th:text="${producto.id == null ? 'Nuevo Producto' : 'Editar Producto'}">Producto</h4>
-                        <a href="/admin/productos" class="btn btn-sm btn-outline-light">Volver</a>
+            <div class="col-md-8 col-lg-7">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                        <h5 class="card-title mb-0 fw-bold">
+                            <i class="bi"
+                                th:classappend="${producto.id == null ? 'bi-plus-circle' : 'bi-pencil-square'}"></i>
+                            <span
+                                th:text="${producto.id == null ? 'Nuevo Producto' : 'Editar Producto'}">Producto</span>
+                        </h5>
+                        <a href="/admin/productos" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left"></i>
+                            Volver</a>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4 bg-white">
                         <form
                             th:action="@{${producto.id == null ? '/admin/productos' : '/admin/productos/editar/' + producto.id}}"
                             th:object="${producto}" method="post">
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <label for="nombre" class="form-label fw-bold">Nombre del Producto</label>
                                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
                                         th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
                                     <div class="invalid-feedback" th:errors="*{nombre}"></div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="precio" class="form-label">Precio</label>
-                                    <input type="number" step="0.01" class="form-control" id="precio"
-                                        th:field="*{precio}"
-                                        th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
-                                    <div class="invalid-feedback" th:errors="*{precio}"></div>
+                                    <label for="precio" class="form-label fw-bold">Precio ($)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" step="0.01" class="form-control" id="precio"
+                                            th:field="*{precio}"
+                                            th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
+                                        <div class="invalid-feedback" th:errors="*{precio}"></div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="imagenUrl" class="form-label">URL de Imagen</label>
+                                <label for="imagenUrl" class="form-label fw-bold">URL de la Imagen</label>
                                 <input type="text" class="form-control" id="imagenUrl" th:field="*{imagenUrl}"
                                     th:classappend="${#fields.hasErrors('imagenUrl')} ? 'is-invalid' : ''"
                                     placeholder="https://ejemplo.com/imagen.jpg">
@@ -48,23 +56,25 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="stock" class="form-label">Stock</label>
+                                    <label for="stock" class="form-label fw-bold">Stock Disponible</label>
                                     <input type="number" class="form-control" id="stock" th:field="*{stock}"
                                         th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid' : ''">
                                     <div class="invalid-feedback" th:errors="*{stock}"></div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="descripcion" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="descripcion" rows="3" th:field="*{descripcion}"
+                            <div class="mb-4">
+                                <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                                <textarea class="form-control" id="descripcion" rows="4" th:field="*{descripcion}"
                                     th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid' : ''"></textarea>
                                 <div class="invalid-feedback" th:errors="*{descripcion}"></div>
                             </div>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary"
-                                    th:text="${producto.id == null ? 'Guardar Producto' : 'Actualizar Producto'}">Guardar</button>
+                                <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                                    <i class="bi bi-save"></i> <span
+                                        th:text="${producto.id == null ? 'Guardar Producto' : 'Actualizar Producto'}">Guardar</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -73,8 +83,8 @@
         </div>
     </main>
 
-    <footer th:replace="~{fragments/layout :: footer}"></footer>
-    <div th:replace="~{fragments/layout :: scripts}"></div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
 
 </body>
 
